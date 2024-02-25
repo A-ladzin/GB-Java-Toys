@@ -6,7 +6,6 @@ public class ToysMachine {
     private Deque<Toy> deck;
     private Integer capacity = null;
     private TreeMap<Toy, Integer> coleccion = new TreeMap<>();
-    private ArrayList<Toy> ordered = new ArrayList<>();
 
 
 
