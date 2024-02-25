@@ -3,10 +3,10 @@ import java.util.*;
 
 public class ToysMachine {
 
-    Deque<Toy> deck;
+    private Deque<Toy> deck;
     private Integer capacity = null;
-
-    HashMap<Toy, Integer> coleccion = new HashMap<>();
+    private TreeMap<Toy, Integer> coleccion = new TreeMap<>();
+    private ArrayList<Toy> ordered = new ArrayList<>();
 
 
 
@@ -14,10 +14,9 @@ public class ToysMachine {
         this.capacity = capacity;
     }
 
-    public ToysMachine(){
-    }
+    public ToysMachine(){}
 
-    private class Toy{
+    private class Toy implements Comparable<Toy>{
         //Имя
         private String name;
         static private Integer pk =0;
@@ -42,6 +41,11 @@ public class ToysMachine {
         @Override
         public String toString() {
             return name;
+        }
+
+        @Override
+        public int compareTo(Toy o) {
+            return this.getId() - o.getId();
         }
     }
 
@@ -118,21 +122,68 @@ public class ToysMachine {
     }
 
     public Toy get(){
+        if(deck.isEmpty()){
+            System.out.println("No toys left");
+            return null;
+        }
         if(deck == null)
         {
             System.out.println("Toys are not shuffled");
             return  null;
         }
-        else{
-            System.out.println(deck.peek().name);
-            return deck.pop();
-        }
+        System.out.println(deck.peek().name);
+        return deck.pop();
 
     }
 
     public void printDeck(){
         System.out.println(deck);
     }
+
+
+    public void printToys()
+    {
+        for(Toy toy: coleccion.keySet()){
+            System.out.println(toy.getId() + " " + toy.name + " : " + coleccion.get(toy));
+        }
+    }
+
+    public void printProbs()
+    {
+        float sum = 0.f;
+        for (Integer toy:coleccion.values()){
+            sum+=toy;
+        }
+        for(Toy toy: coleccion.keySet()){
+            float prob = Math.round(coleccion.get(toy)/sum*100)/100.f;
+            System.out.println(toy.getId() + " " + toy.name + " : " + prob);
+        }
+    }
+
+
+    public void addToys(Integer id, Integer number)
+    {
+        if(id > coleccion.keySet().size() || id < 1)
+        {
+            System.out.println("No such id in collection");
+            return;
+        }
+        Toy toy = (Toy)coleccion.keySet().toArray()[id-1];
+
+        if (getNToys()+number > capacity)
+        {
+            System.out.println("Not enough space: " + (getNToys()+number) + "/" + capacity );
+            return;
+        }
+        coleccion.put(toy,coleccion.get(toy)+number);
+    }
+
+
+    public void fillMachine(){
+
+    }
+
+
 
 
 
