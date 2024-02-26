@@ -15,7 +15,7 @@ public class ToysMachine {
 
     public ToysMachine(){}
 
-    private class Toy implements Comparable<Toy>{
+    public class Toy implements Comparable<Toy>{
         //Имя
         private String name;
         static private Integer pk =0;
@@ -191,8 +191,19 @@ public class ToysMachine {
 
     }
 
+    public TreeMap<Toy, Integer> getToys(){
+        return coleccion;
+    }
 
 
+
+    public Integer getCapacity(){
+        return capacity;
+    }
+
+    public void setCapacity(Integer cap){
+        this.capacity = cap;
+    }
 
 
 
