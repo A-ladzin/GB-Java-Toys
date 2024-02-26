@@ -149,12 +149,8 @@ public class ToysMachine {
 
     public void printProbs()
     {
-        float sum = 0.f;
-        for (Integer toy:coleccion.values()){
-            sum+=toy;
-        }
         for(Toy toy: coleccion.keySet()){
-            float prob = Math.round(coleccion.get(toy)/sum*100)/100.f;
+            float prob = Math.round((float)coleccion.get(toy)/getNToys()*100)/100.f;
             System.out.println(toy.getId() + " " + toy.name + " : " + prob);
         }
     }
@@ -179,6 +175,19 @@ public class ToysMachine {
 
 
     public void fillMachine(){
+
+        for (Toy toy: coleccion.keySet()){
+            coleccion.put(toy,Math.round((float)coleccion.get(toy)/getNToys()*capacity));
+        }
+
+        while(getNToys() > capacity){
+            coleccion.put(coleccion.lastKey(),coleccion.get(coleccion.lastKey())-1);
+        }
+        while(getNToys() < capacity){
+            coleccion.put(coleccion.lastKey(),coleccion.get(coleccion.lastKey())+1);
+        }
+
+
 
     }
 

@@ -1,9 +1,9 @@
 public class App {
     public static void main(String[] args) {
-        ToysMachine tots = new ToysMachine(15);
-        tots.putP("Свинка",0.33f);
-//        tots.putP("Зайчик", 0.5f);
-//        tots.putN("йо-йо", 2);
+        ToysMachine tots = new ToysMachine(20);
+        tots.putP("Свинка",0.1f);
+        tots.putP("Зайчик", 0.3f);
+        tots.putP("йо-йо", 0.4f);
 
 //        tots.printToys();
 //        tots.printProbs();
@@ -15,8 +15,10 @@ public class App {
 //
 //        tots.printDeck();
 
-        tots.addToys(1,2);
+//        tots.addToys(1,2);
+        tots.fillMachine();
         tots.printToys();
+        tots.printProbs();
 
     }
 }
