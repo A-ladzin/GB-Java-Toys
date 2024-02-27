@@ -55,19 +55,25 @@ public class ToysMachine {
     public void shuffle(){
         deck = new ArrayDeque<>();
         ArrayList<Toy> set = new ArrayList<>();
-        set.addAll(coleccion.keySet());
+        for ( Toy toy: coleccion.keySet()){
+            for (int i = 0; i < coleccion.get(toy); i++) {
+                set.add(toy);
+            }
+        }
+
         Random rand = new Random();
         while(set.size() > 0){
-            Integer n = rand.nextInt(set.size());
+            int n = rand.nextInt(set.size());
             Toy toy = set.get(n);
             // Для сохранения интриги последние экземпляры кидаем в конец очереди
             if(coleccion.get(toy) <= 1) {
                 deck.addLast(toy);
                 coleccion.remove(toy);
-                set.remove(toy);
+                set.remove(n);
             }
             else{
                 deck.addFirst(toy);
+                set.remove(n);
                 coleccion.put(toy,coleccion.get(toy)-1);
             }
         }
