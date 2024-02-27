@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class MyPanel extends JPanel implements ActionListener {
 
+
+    static private ImageIcon delIcon = new ImageIcon(new ImageIcon("3807871.png").getImage().getScaledInstance(50,50,Image.SCALE_DEFAULT));
     File record = new File("record.txt");
 
     ArrayList<ToySlider> sliders = new ArrayList<>();
@@ -94,7 +96,7 @@ public class MyPanel extends JPanel implements ActionListener {
             label.setBounds(0, y, 400, 50);
             label.setVisible(true);
             label.setText("TOY: "+ toy+"  Chance: " +machine.getProb(toy) +   "  Count:  " + machine.getToys().get(toy));
-            JButton del = new JButton();
+            JButton del = new JButton(delIcon);
             deletes.add(del);
             del.setBounds(350,y,50,50);
             del.setVisible(true);
