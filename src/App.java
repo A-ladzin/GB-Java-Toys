@@ -2,14 +2,14 @@ public class App {
     public static void main(String[] args) {
 
 
-        ToysMachine tots = new ToysMachine(128);
-
-        tots.putP("Свинка",0.1f);
-        tots.putP("Зайчик", 0.2f);
-        tots.putP("йо-йо", 0.1f);
-        tots.putP("му-му", 0.1f);
-        tots.putP("фыр-фыр", 0.1f);
-        tots.putP("жук-жук", 0.1f);
+        ToysMachine tots = new ToysMachine(256);
+//
+//        tots.put("Свинка",0.1f);
+//        tots.put("Зайчик", 0.2f);
+//        tots.put("йо-йо", 0.1f);
+//        tots.put("му-му", 0.1f);
+//        tots.put("фыр-фыр", 0.1f);
+//        tots.put("жук-жук", 0.1f);
 
         tots.fillMachine();
         tots.printToys();

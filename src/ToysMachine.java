@@ -16,7 +16,6 @@ public class ToysMachine {
         this.capacity = capacity;
     }
 
-    public ToysMachine(){}
 
     public class Toy implements Comparable<Toy>{
         private String name;
@@ -44,46 +43,6 @@ public class ToysMachine {
         }
     }
 
-    public void putN(String name, Integer number){
-
-        Toy toy = new Toy(name);
-        if (capacity != null){
-            if (getNToys()+number > capacity)
-            {
-                System.out.println("Not enough space: " + (getNToys()+number) + "/" + capacity );
-                return;
-            }
-        }
-
-        System.out.println("" + number + " toys added");
-        coleccion.putIfAbsent(toy,number);
-        iter = new Cycle<>(coleccion.keySet());
-    }
-
-    public void putP(String name, float prob){
-        if (this.capacity == null){
-            System.out.println("Not allowed");
-            return;
-        }
-        Toy toy = new Toy(name);
-        Integer number = Math.round(capacity*prob);
-        if(number <= 0){
-            System.out.println("No toys added");
-            return;
-        }
-        if(getNToys()+number > capacity) {
-            System.out.println("Probability must be up to "+ (1.-(double)getNToys()/capacity));
-        }
-        else if (getNToys()+number == capacity+1){
-            System.out.println("" + (number-1) + " toys added");
-            coleccion.putIfAbsent(toy,number-1);
-        }
-        else{
-            System.out.println("" + number + " toys added");
-            coleccion.putIfAbsent(toy,number);
-        }
-        iter = new Cycle<>(coleccion.keySet());
-    }
 
 
     public Integer getNToys(){

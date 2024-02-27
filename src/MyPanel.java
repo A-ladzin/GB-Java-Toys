@@ -84,7 +84,6 @@ public class MyPanel extends JPanel implements ActionListener {
 
 
         for (ToysMachine.Toy toy: machine.getToys().keySet()) {
-
             ToySlider slider = new ToySlider(toy);
             sliders.add(slider);
             this.add(slider);
@@ -143,6 +142,7 @@ public class MyPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton){
             machine.put(this.newName.getText(),0.2f);
+            this.newName.setText("");
             createGui();
         }
 
@@ -180,6 +180,8 @@ public class MyPanel extends JPanel implements ActionListener {
                 machine.shuffle();
                 createGui();
                 getButton.setBounds(0,200,640,200);
+                newName.setVisible(false);
+                addButton.setVisible(false);
                 this.remove(newName);
                 this.remove(addButton);
                 getButton.setBackground(Color.GREEN);
