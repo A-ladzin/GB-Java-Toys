@@ -2,26 +2,20 @@ public class App {
     public static void main(String[] args) {
 
 
-        ToysMachine tots = new ToysMachine(20);
-        MyFrame frame = new MyFrame(tots);
+        ToysMachine tots = new ToysMachine(1024);
+
         tots.putP("Свинка",0.1f);
-        tots.putP("Зайчик", 0.3f);
-        tots.putP("йо-йо", 0.4f);
+        tots.putP("Зайчик", 0.2f);
+        tots.putP("йо-йо", 0.1f);
+        tots.putP("му-му", 0.1f);
+        tots.putP("фыр-фыр", 0.1f);
+        tots.putP("жук-жук", 0.1f);
 
-//        tots.printToys();
-//        tots.printProbs();
-//        tots.shuffle();
-//
-//        for (int i = 0; i < 20; i++) {
-//            tots.get();
-//        }
-//
-//        tots.printDeck();
-
-//        tots.addToys(1,2);
         tots.fillMachine();
         tots.printToys();
         tots.printProbs();
+
+        MyFrame frame = new MyFrame(tots);
 
     }
 }

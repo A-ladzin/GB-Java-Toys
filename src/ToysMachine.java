@@ -1,4 +1,6 @@
 
+import util.Cycle;
+
 import java.util.*;
 
 public class ToysMachine {
@@ -8,6 +10,7 @@ public class ToysMachine {
     private TreeMap<Toy, Integer> coleccion = new TreeMap<>();
 
 
+    private Cycle<Toy> iter = new Cycle<>(coleccion.keySet());
 
     public ToysMachine(Integer capacity){
         this.capacity = capacity;
@@ -58,8 +61,10 @@ public class ToysMachine {
                 return;
             }
         }
+
         System.out.println("" + number + " toys added");
         coleccion.putIfAbsent(toy,number);
+        iter = new Cycle<>(coleccion.keySet());
     }
 
     public void putP(String name, float prob){
@@ -84,6 +89,7 @@ public class ToysMachine {
             System.out.println("" + number + " toys added");
             coleccion.putIfAbsent(toy,number);
         }
+        iter = new Cycle<>(coleccion.keySet());
     }
 
 
@@ -175,20 +181,44 @@ public class ToysMachine {
 
 
     public void fillMachine(){
+        if(coleccion.size() < 2) return;
 
         for (Toy toy: coleccion.keySet()){
             coleccion.put(toy,Math.round((float)coleccion.get(toy)/getNToys()*capacity));
         }
 
         while(getNToys() > capacity){
-            coleccion.put(coleccion.lastKey(),coleccion.get(coleccion.lastKey())-1);
+            Toy max = Collections.max(coleccion.entrySet(), Map.Entry.comparingByValue()).getKey();
+            coleccion.put(max,coleccion.get(max)-1);
         }
         while(getNToys() < capacity){
-            coleccion.put(coleccion.lastKey(),coleccion.get(coleccion.lastKey())+1);
+            Toy min = Collections.min(coleccion.entrySet(), Map.Entry.comparingByValue()).getKey();
+            coleccion.put(min,coleccion.get(min)+1);
+        }
+    }
+
+    public void cycleFill()
+    {
+
+        if(coleccion.size() < 2) return;
+
+        while(getNToys() > capacity){
+            Toy toy = iter.next();
+            if(coleccion.get(toy) > 1){
+                coleccion.put(toy,coleccion.get(toy)-1);
+            }
+            System.out.println(getNToys() + "/" + capacity);
+
         }
 
+        while(getNToys() < capacity){
 
-
+            Toy toy = iter.next();
+            if(coleccion.get(toy) > 0 && coleccion.get(toy) < (capacity-(getToys().size()-2))){
+                coleccion.put(toy,coleccion.get(toy)+1);
+            }
+            System.out.println(getNToys() + "/" + capacity+ "//");
+        }
     }
 
     public TreeMap<Toy, Integer> getToys(){
@@ -203,6 +233,33 @@ public class ToysMachine {
 
     public void setCapacity(Integer cap){
         this.capacity = cap;
+    }
+
+
+    public float getProb(Toy toy)
+    {
+        return Math.round((float)coleccion.get(toy)/getNToys()*1000)/1000.f;
+
+    }
+
+
+    public void put(String name, float prob){
+        if (this.capacity == null){
+            System.out.println("Not allowed");
+            return;
+        }
+        Toy toy = new Toy(name);
+        Integer number = Math.round(capacity*prob);
+        coleccion.putIfAbsent(toy,number);
+        resetCycle();
+        cycleFill();
+
+
+    }
+
+
+    public void resetCycle(){
+        iter = new Cycle<>(coleccion.keySet());
     }
 
 
