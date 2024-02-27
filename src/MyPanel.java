@@ -4,35 +4,49 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MyPanel extends JPanel implements ActionListener {
+
+    File record = new File("record.txt");
+
     ArrayList<ToySlider> sliders = new ArrayList<>();
 
+    JLabel prize;
     JButton addButton;
 
     ArrayList<JLabel> labels = new ArrayList<>();
 
     ArrayList<JButton> deletes = new ArrayList<>();
 
-    Integer PANEL_WIDTH = 800;
+    Integer PANEL_WIDTH = 600;
     JFrame frame;
     ToysMachine machine;
     private JTextField newName = new JTextField();
+
+    JButton getButton = new JButton();
     MyPanel(ToysMachine machine){
-        newName.setBounds(400,0,200,50);
+        newName.setBounds(400,0,120,50);
         newName.setVisible(true);
         newName.setFont(new Font("Monospace",3,36));
         this.add(newName);
         addButton = new JButton();
         addButton.addActionListener(this);
         addButton.setText("ADD");
-        addButton.setFont(new Font("Monospace",0,72));
+        addButton.setFont(new Font("Monospace",0,8));
         this.machine = machine;
         this.setVisible(true);
         this.setLayout(null);
         createGui();
         this.add(addButton);
+        getButton.setVisible(true);
+        this.add(getButton);
+        getButton.setBackground(Color.RED);
+        getButton.setText("SHUFFLE");
+        getButton.addActionListener(this);
 
 
 
@@ -64,7 +78,7 @@ public class MyPanel extends JPanel implements ActionListener {
         sliders = new ArrayList<>();
         labels  = new ArrayList<>();
 
-        addButton.setBounds(400,0,200,labels.size()*100+50);
+        addButton.setBounds(530,0,70,50);
         addButton.setVisible(true);
         Integer y =0 ;
 
@@ -116,7 +130,8 @@ public class MyPanel extends JPanel implements ActionListener {
             });
 
         }
-        addButton.setBounds(400,50,200,labels.size()*100+50);
+        addButton.setBounds(530,0,70,50);
+        getButton.setBounds(400,50,200,(labels.size()+2)*100);
         this.setPreferredSize(new Dimension(PANEL_WIDTH,(labels.size()+2)*100));
     }
 
@@ -143,6 +158,41 @@ public class MyPanel extends JPanel implements ActionListener {
             deletes.remove(idx);
             createGui();
             machine.printToys();
+        }
+
+        if (e.getSource() == getButton){
+            if (machine.isShuffled()){
+                if (machine.getDeckSize() == 0) System.exit(0);
+                try(FileWriter writer = new FileWriter(record,true)){
+                    ToysMachine.Toy toy = machine.get();
+                    writer.write(toy.toString()+"\n");
+                    prize.setText(toy.toString()+"  " + machine.getDeckSize() + " toys left.");
+                }
+                catch (IOException ee){
+                    prize.setText("UNABLE TO WRITE DATA");
+
+                }
+
+
+                prize.repaint();
+            }
+            else{
+                machine.shuffle();
+                createGui();
+                getButton.setBounds(0,200,640,200);
+                this.remove(newName);
+                this.remove(addButton);
+                getButton.setBackground(Color.GREEN);
+                getButton.setText("GET");
+                prize = new JLabel();
+                prize.setFont(new Font("Serif",0,48));
+                prize.setBounds(0,50,600,200);
+                prize.setForeground(Color.BLACK);
+                this.add(prize);
+                prize.setVisible(true);
+
+            }
+
         }
 
 

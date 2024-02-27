@@ -2,7 +2,7 @@ public class App {
     public static void main(String[] args) {
 
 
-        ToysMachine tots = new ToysMachine(1024);
+        ToysMachine tots = new ToysMachine(128);
 
         tots.putP("Свинка",0.1f);
         tots.putP("Зайчик", 0.2f);

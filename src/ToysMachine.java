@@ -4,7 +4,7 @@ import util.Cycle;
 import java.util.*;
 
 public class ToysMachine {
-
+    private boolean shuffled = false;
     private Deque<Toy> deck;
     private Integer capacity = null;
     private TreeMap<Toy, Integer> coleccion = new TreeMap<>();
@@ -91,9 +91,6 @@ public class ToysMachine {
     }
 
 
-    public void pp(){
-        System.out.println(Arrays.deepToString(coleccion.values().toArray()));
-    }
 
 
     public void shuffle(){
@@ -116,6 +113,7 @@ public class ToysMachine {
             }
         }
         System.out.println("Shuffled");
+        shuffled = true;
 
     }
 
@@ -138,6 +136,10 @@ public class ToysMachine {
         System.out.println(deck);
     }
 
+    public Integer getDeckSize(){
+        return deck.size();
+    }
+
 
     public void printToys()
     {
@@ -155,22 +157,6 @@ public class ToysMachine {
     }
 
 
-    public void addToys(Integer id, Integer number)
-    {
-        if(id > coleccion.keySet().size() || id < 1)
-        {
-            System.out.println("No such id in collection");
-            return;
-        }
-        Toy toy = (Toy)coleccion.keySet().toArray()[id-1];
-
-        if (getNToys()+number > capacity)
-        {
-            System.out.println("Not enough space: " + (getNToys()+number) + "/" + capacity );
-            return;
-        }
-        coleccion.put(toy,coleccion.get(toy)+number);
-    }
 
 
     public void fillMachine(){
@@ -248,6 +234,11 @@ public class ToysMachine {
         cycleFill();
 
 
+    }
+
+
+    public boolean isShuffled(){
+        return shuffled;
     }
 
 
