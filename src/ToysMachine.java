@@ -196,7 +196,6 @@ public class ToysMachine {
         Integer number = Math.round(capacity*prob);
         coleccion.putIfAbsent(toy,number);
         resetCycle();
-        cycleFill();
 
 
     }
