@@ -144,6 +144,7 @@ public class MyPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton){
             machine.put(this.newName.getText(),0.2f);
+            machine.fillMachine();
             this.newName.setText("");
             createGui();
         }
